@@ -3,7 +3,7 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-DB_NAME = "expense_tracker"
+DB_NAME = # Inset DB Name
 DB_USER = # Insert User
 DB_PASSWORD = # Insert Password
 DB_HOST = "localhost"
