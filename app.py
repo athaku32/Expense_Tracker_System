@@ -1,13 +1,19 @@
 import psycopg2
 from flask import Flask, render_template
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env
+load_dotenv()
 
 app = Flask(__name__)
 
-DB_NAME = # Inset DB Name
-DB_USER = # Insert User
-DB_PASSWORD = # Insert Password
-DB_HOST = "localhost"
-DB_PORT = "5432"
+# Database settings from environment, with safe defaults
+DB_NAME = os.getenv("DB_NAME", "expense_tracker")
+DB_USER = os.getenv("DB_USER", "postgres")
+DB_PASSWORD = os.getenv("DB_PASSWORD")  # no default on purpose
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = os.getenv("DB_PORT", "5432")
 
 
 def get_connection():
@@ -29,8 +35,8 @@ def index():
         count = cur.fetchone()[0]
         cur.close()
         conn.close()
-        # you can use {{ user_count }} in index.html later if you want
-        return render_template("index.html", user_count=count)
+        # we ignore count for now, just show the page
+        return render_template("index.html")
     except Exception as e:
         return f"Database connection error: {e}"
 
