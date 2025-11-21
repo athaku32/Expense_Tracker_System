@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Transactions</title>
+</head>
+<body>
+    <h1>All Transactions</h1>
+
+    <p><a href="/">Back to Dashboard</a></p>
+
+    <table border="1" cellpadding="5">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Category</th>
+                <th>Payment Method</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in transactions %}
+            <tr>
+                <td>{{ t.id }}</td>
+                <td>{{ t.user_name }}</td>
+                <td>{{ t.category_name }}</td>
+                <td>{{ t.payment_type }}</td>
+                <td>{{ t.amount }}</td>
+                <td>{{ t.type }}</td>
+                <td>{{ t.date }}</td>
+                <td>{{ t.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
