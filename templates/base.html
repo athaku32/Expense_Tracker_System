@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Expense Tracker{% endblock %}</title>
+    <style>
+        :root {
+            --bg: #f3f6fb;
+            --card-bg: #ffffff;
+            --accent: #2563eb;
+            --accent-soft: #dbeafe;
+            --accent-dark: #1d4ed8;
+            --text-main: #0f172a;
+            --text-muted: #6b7280;
+            --border: #e5e7eb;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+        }
+
+        header.topbar {
+            background-color: #0f172a;
+            color: #f9fafb;
+            padding: 12px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.35);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            margin: 0;
+            font-size: 1.25rem;
+            letter-spacing: 0.03em;
+        }
+
+        nav a {
+            color: #e5e7eb;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        main.content {
+            max-width: 1000px;
+            margin: 24px auto 40px auto;
+            padding: 0 16px;
+        }
+
+        .page-title {
+            margin: 0 0 16px 0;
+            font-size: 1.75rem;
+        }
+
+        .subtitle {
+            margin: 0 0 24px 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px 22px;
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.10);
+            margin-bottom: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .muted {
+            color: var(--text-muted);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-soft);
+        }
+
+        .btn-danger {
+            background-color: #fee2e2;
+            color: var(--danger);
+            border-color: #fecaca;
+        }
+
+        .btn-danger:hover {
+            background-color: #fecaca;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+        }
+
+        .stat-box {
+            background-color: var(--accent-soft);
+            border-radius: 10px;
+            padding: 12px 14px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .shortcuts a {
+            margin-right: 12px;
+            font-size: 0.95rem;
+        }
+
+        .shortcuts a.btn {
+            margin-top: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 4px;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: #eff6ff;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #f9fafb;
+        }
+
+        .actions-cell {
+            white-space: nowrap;
+        }
+
+        form label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .form-actions {
+            margin-top: 14px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+        }
+
+        .tag-income {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .tag-expense {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            padding: 16px 0 24px 0;
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="topbar">
+        <h1 class="logo">Expense Tracker</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">Dashboard</a>
+            <a href="{{ url_for('list_transactions') }}">Transactions</a>
+            <a href="{{ url_for('view_budgets') }}">Budgets</a>
+        </nav>
+    </header>
+
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        Phase 03 • CSE 412 Expense Tracker
+    </footer>
+</body>
+</html>

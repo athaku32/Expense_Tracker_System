@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Add Transaction - Expense Tracker{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Add New Transaction</h2>
+<p class="subtitle">Record a new income or expense in your tracker.</p>
+
+<div class="card">
+    <form method="post">
+        <label>User ID:</label>
+        <input type="number" name="user_id" required>
+
+        <label>Category ID:</label>
+        <input type="number" name="category_id" required>
+
+        <label>Payment Method ID (optional):</label>
+        <input type="number" name="payment_id">
+
+        <label>Amount:</label>
+        <input type="number" step="0.01" name="amount" required>
+
+        <label>Type:</label>
+        <select name="type" required>
+            <option value="Expense">Expense</option>
+            <option value="Income">Income</option>
+        </select>
+
+        <label>Date:</label>
+        <input type="date" name="date" required>
+
+        <label>Description:</label>
+        <textarea name="description" rows="3"></textarea>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Transaction</button>
+            <a href="{{ url_for('list_transactions') }}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

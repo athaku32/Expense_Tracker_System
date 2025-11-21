@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Budgets - Expense Tracker{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Budgets</h2>
+<p class="subtitle">Planned spending or limits for each category.</p>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="section-title">Category Budgets</h3>
+        <a href="{{ url_for('add_budget') }}" class="btn btn-primary">Add Budget</a>
+    </div>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Budget Amount</th>
+        </tr>
+        {% for b in budgets %}
+        <tr>
+            <td>{{ b.id }}</td>
+            <td>{{ b.category_name }}</td>
+            <td>${{ "%.2f"|format(b.amount) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

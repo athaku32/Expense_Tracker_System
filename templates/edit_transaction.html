@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Transaction - Expense Tracker{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Edit Transaction</h2>
+<p class="subtitle">Update the details for this transaction.</p>
+
+<div class="card">
+    <form method="post">
+        <label>User ID:</label>
+        <input type="number" name="user_id" value="{{ transaction.user_id }}" required>
+
+        <label>Category ID:</label>
+        <input type="number" name="category_id" value="{{ transaction.category_id }}" required>
+
+        <label>Payment Method ID (optional):</label>
+        <input type="number" name="payment_id" value="{{ transaction.payment_id or '' }}">
+
+        <label>Amount:</label>
+        <input type="number" step="0.01" name="amount" value="{{ transaction.amount }}" required>
+
+        <label>Type:</label>
+        <select name="type" required>
+            <option value="Expense" {% if transaction.type == "Expense" %}selected{% endif %}>Expense</option>
+            <option value="Income" {% if transaction.type == "Income" %}selected{% endif %}>Income</option>
+        </select>
+
+        <label>Date:</label>
+        <input type="date" name="date" value="{{ transaction.date }}" required>
+
+        <label>Description:</label>
+        <textarea name="description" rows="3">{{ transaction.description }}</textarea>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{{ url_for('list_transactions') }}" class="btn btn-outline">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

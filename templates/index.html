@@ -1,12 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Expense Tracker</title>
-</head>
-<body>
-    <h1>Welcome to the Expense Tracker</h1>
-    <p>Your Flask app is connected to PostgreSQL!</p>
+{% extends "base.html" %}
 
-    <a href="/transactions">View Transactions</a>
-</body>
-</html>
+{% block title %}Dashboard - Expense Tracker{% endblock %}
+
+{% block content %}
+<h2 class="page-title">Welcome to the Expense Tracker</h2>
+<p class="subtitle">Quick overview of your income, expenses, and budgets.</p>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="section-title">Summary</h3>
+        <span class="muted">High level view of your finances</span>
+    </div>
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-label">Total income</div>
+            <div class="stat-value">${{ "%.2f"|format(total_income) }}</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">Total expense</div>
+            <div class="stat-value">${{ "%.2f"|format(total_expense) }}</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">Remaining balance</div>
+            <div class="stat-value">${{ "%.2f"|format(remaining_balance) }}</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="section-title">Quick stats</h3>
+    </div>
+    <p>Number of transactions: <strong>{{ transaction_count }}</strong></p>
+    <p>Number of budgets: <strong>{{ budget_count }}</strong></p>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="section-title">Shortcuts</h3>
+    </div>
+    <div class="shortcuts">
+        <a href="{{ url_for('list_transactions') }}" class="btn btn-outline">
+            View all transactions
+        </a>
+        <a href="{{ url_for('add_transaction') }}" class="btn btn-primary">
+            Add a new transaction
+        </a>
+        <a href="{{ url_for('view_budgets') }}" class="btn btn-outline">
+            View budgets
+        </a>
+    </div>
+</div>
+{% endblock %}
