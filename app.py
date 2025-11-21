@@ -4,8 +4,8 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 DB_NAME = "expense_tracker"
-DB_USER = "postgres"
-DB_PASSWORD = "bholenath#1"
+DB_USER = # Insert User
+DB_PASSWORD = # Insert Password
 DB_HOST = "localhost"
 DB_PORT = "5432"
 
