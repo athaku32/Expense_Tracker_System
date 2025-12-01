@@ -322,6 +322,8 @@ def add_budget():
         try:
             category_id = int(request.form["category_id"])
             amount = float(request.form["amount"])
+            start_date = request.form["start_date"]
+            end_date = request.form["end_date"]
 
             # for this project, just always use user 1 for budgets
             user_id = 1
@@ -334,14 +336,16 @@ def add_budget():
                     b_budget_id,
                     b_user_id,
                     b_category_id,
-                    b_amount
+                    b_amount,
+                    b_start_date,
+                    b_end_date
                 )
                 VALUES (
                     (SELECT COALESCE(MAX(b_budget_id), 0) + 1 FROM BUDGET),
-                    %s, %s, %s
+                    %s, %s, %s, %s, %s
                 );
                 """,
-                (user_id, category_id, amount),
+                (user_id, category_id, amount, start_date, end_date),
             )
             conn.commit()
             cur.close()
@@ -353,6 +357,7 @@ def add_budget():
 
     # GET
     return render_template("add_budget.html")
+
 
 
 if __name__ == "__main__":
